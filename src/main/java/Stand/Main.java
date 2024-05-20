@@ -30,7 +30,7 @@ public class Main extends Application {
 
 
         // Aquisição do controlo de uma Scene baseada em XML (FXML) e associação à primaryStage
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("principal.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         Settings.Listacarro();

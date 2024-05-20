@@ -22,7 +22,7 @@ public class CarroDAO {
             stmt.setString(1, c.getModelo());
             stmt.setInt(2, c.getAno());
             stmt.setString(3, c.getCor());
-            stmt.setFloat(4, c.getPreco());
+            stmt.setDouble(4, c.getPreco());
             stmt.setString(5, c.getEstado());
             stmt.setString(6, c.getNumero_chassi());
             stmt.setString(7, c.getNumero_serie());
@@ -57,7 +57,7 @@ public class CarroDAO {
                 String modelo = rs.getString("modelo");
                 int ano = rs.getInt("ano");
                 String cor = rs.getString("cor");
-                float preco = rs.getFloat("preco");
+                double preco = rs.getDouble("preco");
                 String estado = rs.getString("estado");
                 String numero_chassi = rs.getString("numero_chassi");
                 String numero_serie = rs.getString("numero_serie");
@@ -89,7 +89,7 @@ public class CarroDAO {
                 String modelo = rs.getString("modelo");
                 int ano = rs.getInt("ano");
                 String cor = rs.getString("cor");
-                float preco = rs.getFloat("preco");
+                double preco = rs.getDouble("preco");
                 String estado = rs.getString("estado");
                 String numero_chassi = rs.getString("numero_chassi");
                 String numero_serie = rs.getString("numero_serie");
@@ -136,7 +136,7 @@ public class CarroDAO {
             stmt.setString(1, c.getModelo());
             stmt.setInt(2, c.getAno());
             stmt.setString(3, c.getCor());
-            stmt.setFloat(4, c.getPreco());
+            stmt.setDouble(4, c.getPreco());
             stmt.setString(5, c.getEstado());
             stmt.setString(6, c.getNumero_chassi());
             stmt.setString(7, c.getNumero_serie());

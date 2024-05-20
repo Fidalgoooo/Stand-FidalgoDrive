@@ -5,7 +5,7 @@ public class Carro {
     private String modelo;
     private int ano;
     private String cor;
-    private float Preco;
+    private double Preco;
     private String estado;
     private String numero_chassi;
     private String numero_serie;
@@ -43,11 +43,11 @@ public class Carro {
         this.cor = cor;
     }
 
-    public float getPreco() {
+    public double getPreco() {
         return Preco;
     }
 
-    public void setPreco(float Preco) {
+    public void setPreco(double Preco) {
         this.Preco = Preco;
     }
 
@@ -80,7 +80,7 @@ public class Carro {
         this.idCarro = idCarro;
     }
 
-    public Carro(int idCarro, String modelo, int ano, String cor, float Preco, String estado, String numero_chassi, String numero_serie) {
+    public Carro(int idCarro, String modelo, int ano, String cor, double Preco, String estado, String numero_chassi, String numero_serie) {
         this.idCarro = idCarro;
         this.modelo = modelo;
         this.ano = ano;
@@ -91,7 +91,7 @@ public class Carro {
         this.numero_serie = numero_serie;
     }
 
-    public Carro(String modelo, int ano, String cor, float preco, String estado, String numero_chassi, String numero_serie) {
+    public Carro(String modelo, int ano, String cor, double preco, String estado, String numero_chassi, String numero_serie) {
         this.modelo = modelo;
         this.ano = ano;
         this.cor = cor;

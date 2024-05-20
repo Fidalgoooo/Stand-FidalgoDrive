@@ -5,7 +5,7 @@ import java.util.Date;
 public class Venda {
     private int idVenda;
     private String dataVenda;
-    private float PrecoCarro;
+    private double PrecoCarro;
     private String nome;
     private String modelo;
 
@@ -26,11 +26,11 @@ public class Venda {
         this.dataVenda = DataVenda;
     }
 
-    public float getPrecoCarro() {
+    public double getPrecoCarro() {
         return PrecoCarro;
     }
 
-    public void setPrecoCarro(float precoCarro) {
+    public void setPrecoCarro(double precoCarro) {
         PrecoCarro = precoCarro;
     }
 
@@ -50,14 +50,14 @@ public class Venda {
         this.modelo = modelo;
     }
 
-    public Venda(String DataVenda, float precoCarro, String nome, String modelo) {
+    public Venda(String DataVenda, double precoCarro, String nome, String modelo) {
         this.dataVenda = DataVenda;
         this.PrecoCarro = precoCarro;
         this.nome = nome;
         this.modelo = modelo;
     }
 
-    public Venda(int idVenda, String DataVenda, float precoCarro, String nome, String modelo) {
+    public Venda(int idVenda, String DataVenda, double precoCarro, String nome, String modelo) {
         this.idVenda = idVenda;
         this.dataVenda = DataVenda;
         this.PrecoCarro = precoCarro;

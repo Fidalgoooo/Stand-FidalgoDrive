@@ -247,7 +247,7 @@ public class PrincipalController implements Initializable {
             String novoModelo = txtModelo.getText();
             int novoAno = Integer.parseInt(txtAno.getText());
             String novoCor = txtCor.getText();
-            float novoPreco = Float.parseFloat(txtPrecoCarro.getText());
+            Double novoPreco = Double.parseDouble(txtPrecoCarro.getText());
             String novoEstado = txtEstadoCarro.getText();
             String novoNumeroChassi = txtChassi.getText();
             String novoNumeroSerie = txtSerieCarro.getText();
@@ -315,7 +315,7 @@ public class PrincipalController implements Initializable {
                 carroEdit.setModelo(txtModelo.getText());
                 carroEdit.setAno(Integer.parseInt(txtAno.getText()));
                 carroEdit.setCor(txtCor.getText());
-                carroEdit.setPreco(Float.parseFloat(txtPrecoCarro.getText()));
+                carroEdit.setPreco(Double.parseDouble(txtPrecoCarro.getText()));
                 carroEdit.setEstado(txtEstadoCarro.getText());
                 carroEdit.setNumero_chassi(txtChassi.getText());
                 carroEdit.setNumero_serie(txtSerieCarro.getText());
@@ -342,7 +342,7 @@ public class PrincipalController implements Initializable {
                             stmt.setString(1,txtModelo.getText());
                             stmt.setInt(2, Integer.parseInt(txtAno.getText()));
                             stmt.setString(3,txtCor.getText());
-                            stmt.setFloat(4, Float.parseFloat(txtPreco.getText()));
+                            stmt.setDouble(4, Double.parseDouble(txtPreco.getText()));
                             stmt.setString(5,txtEstadoCarro.getText());
                             stmt.setString(6,txtChassi.getText());
                             stmt.setString(7,txtSerieCarro.getText());
@@ -447,7 +447,7 @@ public class PrincipalController implements Initializable {
         TabelaModelo.setCellValueFactory(new PropertyValueFactory<Carro, String>("modelo"));
         TabelaAno.setCellValueFactory(new PropertyValueFactory<Carro, Integer>("ano"));
         TabelaCor.setCellValueFactory(new PropertyValueFactory<Carro, String>("cor"));
-        TabelaPrecoCarro.setCellValueFactory(new PropertyValueFactory<Carro, Float>("preco"));
+        TabelaPrecoCarro.setCellValueFactory(new PropertyValueFactory<Carro, Double>("preco"));
         TabelaEstado.setCellValueFactory(new PropertyValueFactory<Carro, String>("estado"));
         TabelaChassi.setCellValueFactory(new PropertyValueFactory<Carro, String>("numero_chassi"));
         TabelaSerie.setCellValueFactory(new PropertyValueFactory<Carro, String>("numero_serie"));
@@ -483,8 +483,8 @@ public class PrincipalController implements Initializable {
             alert.showAndWait();
         } else {
             // Obtém os valores dos campos
-            String novoDataVenda = txtVenda.getText();
-            float novoPreco = Float.parseFloat(txtPrecoCarro.getText());
+            String novoDataVenda = txtDataVenda.getText();
+            double novoPreco = Double.parseDouble(txtPrecoCarro.getText());
             String novoNomeVendedor = txtNomeVendedor.getText();
             String novoModelo = txtModelo.getText();
 
@@ -524,7 +524,7 @@ public class PrincipalController implements Initializable {
         }
     }
     public void EditarVendaOnAction() {
-        if (txtIdVenda.getText().isEmpty() || txtDataVenda.getText().isEmpty() || txtNomeVendedor.getText().isEmpty() || txtModelo.getText().isEmpty()
+        if (txtIdVenda.getText().isEmpty() || txtDataVenda.getText().isEmpty() || txtNomeVendedor.getText().isEmpty() || txtModeloVenda.getText().isEmpty()
                 || txtPrecoCarro.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro");
@@ -545,8 +545,8 @@ public class PrincipalController implements Initializable {
             if (vendaEdit != null) {
                 vendaEdit.setDataVenda(txtDataVenda.getText());
                 vendaEdit.setNome(txtNomeVendedor.getText());
-                vendaEdit.setModelo(txtModelo.getText());
-                vendaEdit.setPrecoCarro(Float.parseFloat(txtPrecoCarro.getText()));
+                vendaEdit.setModelo(txtModeloVenda.getText());
+                vendaEdit.setPrecoCarro(Double.parseDouble(txtPrecoCarro.getText()));
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Editar");
@@ -554,10 +554,35 @@ public class PrincipalController implements Initializable {
                 ButtonType botaoSim = new ButtonType("Sim");
                 ButtonType botaoNao = new ButtonType("Não");
                 alert.getButtonTypes().setAll(botaoSim, botaoNao);
-                Optional<ButtonType> escolha = alert.showAndWait();
+                Optional<ButtonType> choose = alert.showAndWait();
 
-                if (escolha.isPresent() && escolha.get() == botaoSim) {
-                    // Aqui você pode adicionar a lógica para atualizar a venda no banco de dados ou em qualquer outra estrutura de dados
+                if (choose.isPresent() && choose.get() == botaoSim) {
+                    try {
+                        Connection conn = ConexaoBD.abrirBD();
+                        if (conn != null) {
+                            String update = "UPDATE vendas SET dataVenda = ?, precoCarro = ?, nome = ?, modelo = ? WHERE idVenda = ?;";
+                            PreparedStatement stmt = conn.prepareStatement(update);
+                            stmt.setString(1, txtDataVenda.getText());
+                            stmt.setString(2, txtPrecoCarro.getText());
+                            stmt.setString(3, txtNomeVendedor.getText());
+                            stmt.setString(4, txtModeloVenda.getText());
+                            stmt.setInt(5, novoIdVenda);
+
+
+                            int atualizar = stmt.executeUpdate();
+                            if (atualizar > 0) {
+                                for (Venda v : Settings.getListaVenda()) {
+                                    if (v.getIdVenda() == vendaEdit.getIdVenda()) {
+                                        int index = Settings.getListaVenda().indexOf(v);
+                                        Settings.getListaVenda().set(index, vendaEdit);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                     alert1.setTitle("Informação");
@@ -631,18 +656,17 @@ public class PrincipalController implements Initializable {
     public void TabelaVenda() {
         TabelaIdVenda.setCellValueFactory(new PropertyValueFactory<Venda, Integer>("idVenda"));
         TabelaDataVenda.setCellValueFactory(new PropertyValueFactory<Venda, String>("dataVenda"));
-        TabelaPrecoVenda.setCellValueFactory(new PropertyValueFactory<Venda, Float>("precoCarro"));
+        TabelaPrecoVenda.setCellValueFactory(new PropertyValueFactory<Venda, Double>("precoCarro"));
         TabelaNomeVenda.setCellValueFactory(new PropertyValueFactory<Venda, String>("nome"));
         TabelaModeloVenda.setCellValueFactory(new PropertyValueFactory<Venda, String>("modelo"));
 
-        VendaDAO.listVendas();
-        TableViewVenda.setItems(listaVenda);
+        TableViewVenda.setItems(VendaDAO.listVendas());
     }
     public void VendaVerInfo() {
         Venda vendaData = (Venda) TableViewVenda.getSelectionModel().getSelectedItem();
         if (Objects.nonNull(vendaData)) {
             txtIdVenda.setText(String.valueOf(vendaData.getIdVenda()));
-            txtDataVenda.setText(vendaData.getDataVenda());
+            txtDataVenda.setText(String.valueOf(vendaData.getDataVenda()));
             txtPreco.setText(String.valueOf(vendaData.getPrecoCarro()));
             txtNomeVendedor.setText(String.valueOf(vendaData.getNome()));
             txtModeloVenda.setText(String.valueOf(vendaData.getModelo()));
@@ -840,8 +864,7 @@ public class PrincipalController implements Initializable {
         TabelaNifVendedor.setCellValueFactory(new PropertyValueFactory<Vendedor, String>("nif"));
         TabelaNumeroVendas.setCellValueFactory(new PropertyValueFactory<Vendedor, Integer>("numeroVendas"));
 
-        VendedorDAO.listVendedores();
-        TableViewVendedor.setItems(listaVendedor);
+        TableViewVendedor.setItems(VendedorDAO.listVendedores());
     }
 
     public void VendedorVerInfo() {

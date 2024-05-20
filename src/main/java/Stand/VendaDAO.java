@@ -20,7 +20,7 @@ public class VendaDAO {
         try{
             stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, venda.getDataVenda());
-            stmt.setFloat(2, venda.getPrecoCarro());
+            stmt.setDouble(2, venda.getPrecoCarro());
             stmt.setString(3, venda.getNome());
             stmt.setString(4, venda.getModelo());
             stmt.execute();
@@ -53,7 +53,7 @@ public class VendaDAO {
             while(rs.next()){
                 int idVenda = rs.getInt("idVenda");
                 String dataVenda = rs.getString("dataVenda");
-                float precoCarro = rs.getFloat("PrecoCarro");
+                double precoCarro = rs.getDouble("PrecoCarro");
                 String nome = rs.getString("nome");
                 String modelo = rs.getString("modelo");
                 Venda venda = new Venda(idVenda, dataVenda, precoCarro, nome, modelo);
@@ -83,7 +83,7 @@ public class VendaDAO {
             rs = stmt.executeQuery();
             if(rs.next()){
                 String dataVenda = rs.getString("dataVenda");
-                float precoCarro = rs.getFloat("PrecoCarro");
+                double precoCarro = rs.getDouble("PrecoCarro");
                 String nome = rs.getString("nome");
                 String modelo = rs.getString("modelo");
                 venda = new Venda(id, dataVenda, precoCarro, nome, modelo);
@@ -127,7 +127,7 @@ public class VendaDAO {
         try{
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, venda.getDataVenda());
-            stmt.setFloat(2, venda.getPrecoCarro());
+            stmt.setDouble(2, venda.getPrecoCarro());
             stmt.setString(3, venda.getNome());
             stmt.setString(4, venda.getModelo());
             stmt.setInt(5, venda.getIdVenda());
