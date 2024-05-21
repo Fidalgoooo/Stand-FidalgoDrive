@@ -17,12 +17,10 @@ CREATE TABLE carros (
 -- Tabela 'vendas'
 CREATE TABLE vendas (
     idVenda INT AUTO_INCREMENT PRIMARY KEY,
-    data_venda DATE,
-    preço_venda DECIMAL(10,2),
-    vendedor_id INT,
-    carro_id INT,
-    FOREIGN KEY (vendedor_id) REFERENCES vendedores(idVendedor),
-    FOREIGN KEY (carro_id) REFERENCES carros(idCarro)
+    dataVenda DATE,
+    precoCarro DECIMAL(10,2),
+	nome varchar(100),
+    modelo varchar(100)
 );
 
 -- Tabela 'vendedores'
@@ -32,7 +30,7 @@ CREATE TABLE vendedores (
     contacto VARCHAR(20),
     email VARCHAR(100),
     nif VARCHAR(20),
-    numero_vendas INT
+    numeroVendas INT
 );
 
 CREATE TABLE Login (
@@ -82,3 +80,8 @@ VALUES
     ('2023-11-20', 19000, 'Sofia Martins', 'Modelo H'),
     ('2023-12-10', 28000, 'Paulo Ribeiro', 'Modelo I'),
     ('2024-01-18', 31000, 'Beatriz Fernandes', 'Modelo J');
+    
+    -- Inserir exemplo de login
+INSERT INTO login (username, password)
+VALUES 
+    ('Afonso','1234');
